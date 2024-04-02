@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobMatching.DAL.Models;
+namespace MatchingJob.Entities;
 
 public partial class Job
 {

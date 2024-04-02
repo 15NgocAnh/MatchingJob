@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace JobMatching.DAL.Models;
+namespace MatchingJob.Entities;
 
 public partial class Skill
 {

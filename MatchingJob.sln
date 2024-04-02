@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchingJob.API", "MatchingJob.API\MatchingJob.API.csproj", "{CA6741C8-38DA-4B98-8A69-24319BC8DB16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchingJob.API", "MatchingJob.API\MatchingJob.API.csproj", "{CA6741C8-38DA-4B98-8A69-24319BC8DB16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchingJob.Data", "MatchingJob.Data\MatchingJob.Data.csproj", "{00D092CA-A6BF-4C63-8748-91BAE6D53DBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchingJob.Data", "MatchingJob.Data\MatchingJob.Data.csproj", "{00D092CA-A6BF-4C63-8748-91BAE6D53DBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchingJob.DAL", "MatchingJob.DAL\MatchingJob.DAL.csproj", "{DEF9EF5A-C1CA-49E2-9FBB-27662868142E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchingJob.DAL", "MatchingJob.DAL\MatchingJob.DAL.csproj", "{DEF9EF5A-C1CA-49E2-9FBB-27662868142E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchingJob.Entities", "MatchingJob.Entities\MatchingJob.Entities.csproj", "{83D0E609-82A4-4D33-87A6-1A0AA399761C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchingJob.Entities", "MatchingJob.Entities\MatchingJob.Entities.csproj", "{83D0E609-82A4-4D33-87A6-1A0AA399761C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchingJob.BLL", "MatchingJob.BLL\MatchingJob.BLL.csproj", "{C8A3BFE3-E7E8-4B0A-AE7A-D5363F836CC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{83D0E609-82A4-4D33-87A6-1A0AA399761C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83D0E609-82A4-4D33-87A6-1A0AA399761C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83D0E609-82A4-4D33-87A6-1A0AA399761C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8A3BFE3-E7E8-4B0A-AE7A-D5363F836CC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8A3BFE3-E7E8-4B0A-AE7A-D5363F836CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8A3BFE3-E7E8-4B0A-AE7A-D5363F836CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8A3BFE3-E7E8-4B0A-AE7A-D5363F836CC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

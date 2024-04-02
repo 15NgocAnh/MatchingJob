@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobMatching.DAL.Models;
+namespace MatchingJob.Entities;
 
-public partial class User
+public class User
 {
     public Guid Id { get; set; }
 
@@ -13,7 +14,8 @@ public partial class User
 
     public string UserName { get; set; } = null!;
 
-    public DateOnly BirthDay { get; set; }
+    [Column(TypeName = "date")]
+    public DateTime BirthDay { get; set; }
 
     public string? Experience { get; set; }
 
@@ -21,19 +23,19 @@ public partial class User
 
     public string? Location { get; set; }
 
-    public bool IsEmailConfirmed { get; set; }
+    public bool? IsEmailConfirmed { get; set; } = false;
 
     public bool IsMale { get; set; }
 
-    public bool IsLocked { get; set; }
+    public bool? IsLocked { get; set; } = false;
 
-    public bool IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; } = false;
 
     public Guid? JobsId { get; set; }
 
-    public string FirstName { get; set; } = null!;
+    public string FirstName { get; set; }
 
-    public string LastName { get; set; } = null!;
+    public string LastName { get; set; }
 
     public string? PhoneNumber { get; set; }
 
