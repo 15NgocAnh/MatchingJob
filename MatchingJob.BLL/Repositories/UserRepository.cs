@@ -7,8 +7,8 @@ using System.Collections.Immutable;
 using System.Drawing.Printing;
 using System.Security.Cryptography;
 using System.Text;
-using MatchingJob.DAL;
 using static System.Net.Mime.MediaTypeNames;
+using MatchingJob.DAL.DTOs.User;
 
 namespace MatchingJob.BLL
 {

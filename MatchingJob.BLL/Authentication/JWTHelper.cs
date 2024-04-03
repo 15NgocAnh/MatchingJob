@@ -17,17 +17,17 @@ namespace MatchingJob.BLL.Authentication
         {
             _tokenSettings = tokenSettings.Value;
         }
-        public (string token, DateTime expiration) GenerateJWT(Guid userId, string userEmail)
+        public (string token, DateTime expiration) GenerateJWT(Guid userId, string userName)
         {
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-                    new Claim(ClaimTypes.Email, userEmail),
+                    new Claim(ClaimTypes.Email, userName),
                 }),
                 Expires = DateTime.Now.AddMinutes(_tokenSettings.AccessExpirationInMinutes),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Secret)), SecurityAlgorithms.HmacSha512Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Secret)), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

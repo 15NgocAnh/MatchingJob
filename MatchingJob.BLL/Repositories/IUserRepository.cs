@@ -1,4 +1,4 @@
-﻿using MatchingJob.DAL;
+﻿using MatchingJob.DAL.DTOs.User;
 
 namespace MatchingJob.BLL
 {

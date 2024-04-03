@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MatchingJob.DAL
+namespace MatchingJob.DAL.DTOs.User
 {
     public class UsersDTO
     {

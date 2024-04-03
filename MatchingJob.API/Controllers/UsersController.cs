@@ -10,14 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.IdentityModel.Tokens;
-using MatchingJob.DAL;
 using MatchingJob.BLL;
+using MatchingJob.API.Controllers;
+using MatchingJob.DAL.DTOs.User;
 
 namespace MatchingJob.API
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseController
     {
         private readonly AppDbContext _context;
         private readonly IUserRepository _userRepo;

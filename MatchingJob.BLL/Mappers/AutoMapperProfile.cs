@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MatchingJob.Entities;
-using MatchingJob.DAL;
+using MatchingJob.DAL.DTOs.User;
 
 namespace MatchingJob.BLL.Mappers
 {
@@ -13,7 +13,7 @@ namespace MatchingJob.BLL.Mappers
             _passwordHasher = passwordHasher;
 
             CreateMap<UsersDTO, User>().ForMember(dest => dest.Password, opt => opt.MapFrom(src => _passwordHasher.Hash(src.Password))).ReverseMap();
-            CreateMap<LoginModel, User>().ReverseMap();
+            CreateMap<LoginModel, User>().ForMember(dest => dest.Password, opt => opt.MapFrom(src => _passwordHasher.Hash(src.Password)));
         }
     }
 }
