@@ -18,7 +18,7 @@ namespace MatchingJob.Data
                 .AddJsonFile("appsettings.json")
                 .Build();
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("AppDbContext"));
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DBContext"));
 
             return new AppDbContext(optionsBuilder.Options);
         }

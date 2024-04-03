@@ -15,6 +15,13 @@ namespace MatchingJob.Data
         { }
 
         public DbSet<User> Users { get; set; }
-        
+        public DbSet<Role> Roles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            new DBInitializer(modelBuilder).seedData();
+            modelBuilder.Entity<User>().Property(b => b.LastName).HasMaxLength(50);
+        }
     }
 }

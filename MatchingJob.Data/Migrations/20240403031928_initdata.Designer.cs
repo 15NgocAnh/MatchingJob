@@ -4,6 +4,7 @@ using MatchingJob.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchingJob.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240403031928_initdata")]
+    partial class initdata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,7 +203,7 @@ namespace MatchingJob.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8cba9c31-b59f-4ef7-a8d1-42260823fde2"),
+                            Id = new Guid("f4106a3c-16b9-41c2-9178-50027f51edac"),
                             BirthDay = new DateTime(2015, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Education = "Bachelor's Degree",
                             Email = "johndoe@example.com",
@@ -218,7 +221,7 @@ namespace MatchingJob.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("92f3f460-69b4-4f65-aa00-35bbb5915111"),
+                            Id = new Guid("7a602c19-f917-4d7d-82d8-992e35c172d6"),
                             BirthDay = new DateTime(2015, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Education = "Hue University",
                             Email = "nguyenvana@gmail.com",
@@ -236,7 +239,7 @@ namespace MatchingJob.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2c5d1794-c35a-4ed6-b7c5-7f4f5b7ffe1d"),
+                            Id = new Guid("94bca55e-27db-444b-8f6c-6d05a1ab431b"),
                             BirthDay = new DateTime(2015, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Education = "Hue University",
                             Email = "nguyenthib123@gmail.com",

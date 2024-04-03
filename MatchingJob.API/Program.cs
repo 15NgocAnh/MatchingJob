@@ -4,44 +4,55 @@ using MatchingJob.BLL;
 using AutoMapper;
 using MatchingJob.BLL.Mappers;
 using MatchingJob.BLL.Authentication;
-using System.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MatchingJob.BLL.Repositories;
+using MatchingJob.API.MiddleWare;
+using MatchingJob.API.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configuration = builder.Configuration;
 
-//add DBContext
-builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DBContext") ?? throw new InvalidOperationException("Connect string 'DBContext' not found!")));
+#region add DBContext
+var connectionString = builder.Configuration.GetConnectionString("DBContext") ?? throw new InvalidOperationException("Connection string 'DBContext' not found.");
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
+#endregion
 
 // Add services to the container.
+
+#region Mail Sender
+var emailConfig = builder.Configuration.GetSection("MailSettings").Get<MailSetting>();
+builder.Services.AddSingleton(emailConfig);
+#endregion
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Encryption
+#region Encryption and Token
 builder.Services.AddSingleton<IPasswordHasher, PBKDF2Hasher>();
 builder.Services.AddSingleton<ITokenHelper, JWTHelper>();
+#endregion
 
-//Add scoped Repository
+#region Scoped Repository
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+#endregion
 
-//set autoMapper
+#region autoMapper
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddSingleton(provider => new MapperConfiguration(options =>
     {
         options.AddProfile(new AutoMapperProfile(provider.GetService<IPasswordHasher>()));
     })
 .CreateMapper());
+#endregion
 
-//Jwt configuration starts here
+#region Jwt configuration - Authentication
 var tokenConfiguration = builder.Configuration.GetSection("TokenSettings");
 builder.Services.Configure<TokenSettings>(tokenConfiguration);
 
@@ -67,11 +78,12 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
     };
 });
-//Jwt configuration ends here
+#endregion
 
-//set CORS
+#region set CORS
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(policy =>
     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+#endregion
 
 var app = builder.Build();
 
@@ -80,6 +92,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseGlobalExceptionMiddleware();
 }
 
 app.UseHttpsRedirection();
