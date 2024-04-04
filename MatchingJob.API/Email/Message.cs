@@ -12,7 +12,7 @@ namespace MatchingJob.API.Email
         {
             To = new List<MailboxAddress>();
 
-            To.AddRange(to.Select(x => new MailboxAddress(x))); 
+            To.AddRange(to.Select(x => new MailboxAddress("email", x)));    
             Subject = subject;
             Content = content;
         }
