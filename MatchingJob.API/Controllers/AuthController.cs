@@ -1,5 +1,6 @@
 ﻿using MatchingJob.BLL.Repositories;
 using MatchingJob.DAL.DTOs.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MatchingJob.API.Controllers
@@ -15,6 +16,7 @@ namespace MatchingJob.API.Controllers
             _authRepository = authRepository;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> GetToken(LoginModel loginModel)
         {

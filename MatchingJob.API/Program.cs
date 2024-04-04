@@ -1,15 +1,16 @@
-using MatchingJob.Data;
-using Microsoft.EntityFrameworkCore;
-using MatchingJob.BLL;
-using AutoMapper;
-using MatchingJob.BLL.Mappers;
-using MatchingJob.BLL.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using MatchingJob.BLL.Repositories;
-using MatchingJob.API.MiddleWare;
+﻿using AutoMapper;
 using MatchingJob.API.Email;
+using MatchingJob.API.MiddleWare;
+using MatchingJob.BLL;
+using MatchingJob.BLL.Authentication;
+using MatchingJob.BLL.Mappers;
+using MatchingJob.BLL.Repositories;
+using MatchingJob.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,16 +23,58 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 #endregion
 
 // Add services to the container.
-
+#region set header for bearer
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+            Reference = new OpenApiReference
+            {
+            Type = ReferenceType.SecurityScheme,
+            Id = "Bearer"
+            },
+            Scheme = "oauth2",
+            Name = "Bearer",
+            In = ParameterLocation.Header,
+            },
+            new List<string>()
+        }
+    });
+});
+#endregion 
 #region Mail Sender
-var emailConfig = builder.Configuration.GetSection("MailSettings").Get<MailSetting>();
-builder.Services.AddSingleton(emailConfig);
+builder.Services.AddOptions();                                         // Kích hoạt Options
+var mailsettings = configuration.GetSection("MailSettings");  // đọc config
+builder.Services.Configure<MailSetting>(mailsettings);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+#endregion
+
+#region Authorization
+builder.Services.AddAuthorization(options =>
+{
+    //options.AddPolicy("InGenZ", policy =>
+    //    policy.Requirements.Add(new MinimumAgeRequirement(21)));.3
+});
 #endregion
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+
 
 #region Encryption and Token
 builder.Services.AddSingleton<IPasswordHasher, PBKDF2Hasher>();
@@ -74,8 +117,8 @@ builder.Services.AddAuthentication(options =>
         RequireSignedTokens = true,
         RequireExpirationTime = true,
         ValidateLifetime = true,
-        ValidateAudience = true,
-        ValidateIssuer = true,
+        ValidateAudience = false,
+        ValidateIssuer = false,
     };
 });
 #endregion
@@ -84,6 +127,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(policy =>
     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 #endregion
+
 
 var app = builder.Build();
 

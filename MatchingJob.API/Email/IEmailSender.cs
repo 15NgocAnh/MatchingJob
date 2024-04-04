@@ -2,6 +2,7 @@
 {
     public interface IEmailSender
     {
-        void sendEmail(Message message);
+         Task sendEmail(Message message);
+         Task sendEmailAsync(string email, string subject, string htmlMessage);
     }
 }

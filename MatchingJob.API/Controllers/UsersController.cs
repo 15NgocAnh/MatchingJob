@@ -16,6 +16,7 @@ using MatchingJob.DAL.DTOs.User;
 
 namespace MatchingJob.API
 {
+    //[Authorize]
     public class UsersController : BaseController
     {
         private readonly AppDbContext _context;
@@ -27,6 +28,11 @@ namespace MatchingJob.API
             _userRepo = userRepository;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        {
+            return await _context.Users.ToListAsync();
+        }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
@@ -235,6 +241,41 @@ namespace MatchingJob.API
                     Success = false,
                     Message = Constants.SOMETHING_WENT_WRONG
                 });
+            }
+        }
+
+        [Route("/{user_id}")]
+        [HttpPost]
+        public async Task<ActionResult> setRole(Guid user_id, int role_id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == user_id);
+            if (user != null)
+            {
+                var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == role_id);
+                if(role != null)
+                {
+                    user.Roles.Add(role);
+                    _context.SaveChanges();
+                    return Ok(new APIResponse
+                    {
+                        Success = false,
+                        Message = "Set role successfully!"
+                    });
+                }
+                else
+                {
+                    return NotFound(new APIResponse
+                    {
+                        Success = false,
+                        Message = "Find role by id fail"
+                    });
+                }
+            } else {
+                return NotFound(new APIResponse
+                {
+                    Success = false,
+                    Message = "Find user by id fail"
+                }); 
             }
         }
 

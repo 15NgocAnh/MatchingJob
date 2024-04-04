@@ -15,4 +15,8 @@
     <ProjectReference Include="..\MatchingJob.DAL\MatchingJob.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Requirement\" />
+  </ItemGroup>
+
 </Project>
